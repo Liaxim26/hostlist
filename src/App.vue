@@ -10,24 +10,40 @@
     <thead>
       <tr>
         <th>id</th>
-        <th>hostName</th>
+        <th>Имя хоста</th>
         <th>ip</th>
-      </tr>
+        <th>Цена</th>
+        <th>Оплачено</th>
+        <th>До</th>
+        <th>Характеристики</th>
+        <th>Комментарий</th>
+      </tr> 
     </thead>
     <tbody>
       <tr v-for="host in hosts" :key="host.id">
         <td>{{host.id}}</td>
         <td><input v-model="host.name"></td>
         <td><input v-model="host.ip"></td>
+        <td><input v-model="host.price"></td>
+        <td><input v-model="host.startdata"></td>
+        <td><input v-model="host.enddata"></td>
+        <td><input v-model="host.specification"></td>
+        <td><input v-model="host.comment"></td>
       </tr> 
       <tr>
         <td></td>  
         <td><input v-model="name"></td>  
         <td><input v-model="ip"></td>  
+        <td><input v-model="price"></td>  
+        <td><input v-model="startdata"></td>  
+        <td><input v-model="enddata"></td>  
+        <td><input v-model="specification"></td>  
+        <td><input v-model="comment"></td>  
       </tr>
       <tr><td><button @click=addNewHost>add</button></td></tr>
     </tbody>
   </table>
+{{hosts}}
 </template>
 
 <script>
@@ -42,7 +58,14 @@ export default {
         // {'id': 3, 'hostName': 'qwewqwe', 'ip': 2131123},
         // {'id': 4, 'hostName': 'qweqewe', 'ip': 12213123},   
       ],
-      
+      id: '',
+      name: '',
+      ip: '',
+      price: '',
+      startdata: '',
+      enddata: '',
+      specification: '',
+      comment: ''
     }
   },
   mounted() {
@@ -54,23 +77,30 @@ export default {
    
   },
   watch: {
-    
+
   },
   methods: {
-    addNewHost(){
-      const id = ''
-      const name = ''
-      const ip = ''
+    async addNewHost(){
       const newHost = {
         'id': this.id,
         'name': this.name,
-        'ip': this.ip
+        'ip': this.ip,
+        'price': this.price,
+        'startdata': this.startdata,
+        'enddata': this.enddata,
+        'specification': this.specification,
+        'comment': this.comment
       }
       this.hosts.push(newHost)
-      this.id = '', 
-      this.name = '', 
-      this.ip = ''
       const response = this.axios.post("http://hostlist-api/api-create.php", newHost);
+      this.id = ''
+      this.name = ''
+      this.ip = ''
+      this.price = ''
+      this.startdata = ''
+      this.enddata = ''
+      this.specification = ''
+      this.comment = ''
     }
   },
   components: {
