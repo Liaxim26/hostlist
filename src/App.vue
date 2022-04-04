@@ -20,28 +20,7 @@ export default {
 
   },
   methods: {
-    async addNewHost(){
-      const newHost = {
-        'id': this.id,
-        'name': this.name,
-        'ip': this.ip,
-        'price': this.price,
-        'startdata': this.startdata,
-        'enddata': this.enddata,
-        'specification': this.specification,
-        'comment': this.comment
-      }
-      this.hosts.push(newHost)
-      const response = this.axios.post("http://hostlist-api/api-create.php", newHost);
-      this.id = ''
-      this.name = ''
-      this.ip = ''
-      this.price = ''
-      this.startdata = ''
-      this.enddata = ''
-      this.specification = ''
-      this.comment = ''
-    }
+    
   },
   components: {
     Hostlist,

@@ -4,12 +4,17 @@
     <td><input v-model="newHost.name"></td>  
     <td><input v-model="newHost.ip"></td>  
     <td><input v-model="newHost.price"></td>  
-    <td><input v-model="newHost.lastPaymentDate"></td>  
-    <td><input v-model="newHost.nextPaymentDate"></td>  
+    <td><input type="date" v-model="newHost.lastPaymentDate"></td>  
+    <td><input type="date" v-model="newHost.nextPaymentDate"></td>  
     <td><input v-model="newHost.specification"></td>  
     <td><input v-model="newHost.comment"></td>  
+    <td><button 
+    @click="addNewHost"
+  >
+    Добавить
+  </button></td>
   </tr>
-  <tr><td><button @click=addNewHost>add</button></td></tr>
+  
 </template>
 
 <script>
@@ -48,7 +53,21 @@ export default {
       //.then(response => (this.hosts = response.data))
       .then(response => console.log(response))
       .catch(error => console.log(error)) 
-    }
+      this.reloadList()
+      this.clearAddRow()
+    },
+    clearAddRow() {
+        this.newHost.name = '',
+        this.newHost.ip = '',
+        this.newHost.price = '',
+        this.newHost.lastPaymentDate = '',
+        this.newHost.nextPaymentDate = '',
+        this.newHost.specification = '',
+        this.newHost.comment = ''
+    },
+    reloadList() {
+      this.$emit("reloadList");
+    },
   }
 }
 </script>

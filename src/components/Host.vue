@@ -7,6 +7,13 @@
   <td><input @blur='updateHost' v-model="host.nextPaymentDate"></td>
   <td><input @blur='updateHost' v-model="host.specification"></td>
   <td><input @blur='updateHost' v-model="host.comment"></td>
+  <td>
+    <button 
+      @click="deleteHost"
+    >
+    Х
+    </button>
+  </td>
 </template>
 
 <script>
@@ -22,7 +29,7 @@ export default {
     }
   },
   methods: {
-    updateHost(){
+    updateHost() {
       const requestBody = {
         id: this.host.id,
         name: this.host.name,
@@ -37,7 +44,26 @@ export default {
       .put('http://hostlist-api/api-update.php', requestBody)
       //.then(response => (this.hosts = response.data))
       .then(response => console.log(response))
-    }
+    },
+    deleteHost() {
+      const requestBody = {
+        id: this.host.id,
+        name: this.host.name,
+        ip: this.host.ip,
+        price: this.host.price,
+        lastPaymentDate: this.host.lastPaymentDate,
+        nextPaymentDate: this.host.nextPaymentDate,
+        specification: this.host.specification,
+        comment: this.host.comment
+      }
+      this.axios
+      .put('http://hostlist-api/api-delete.php', requestBody)
+      .then(response => console.log(this.host.id))
+      this.reloadList()
+    },
+    reloadList() {
+      this.$emit("reloadList");
+    },
   },
   created() {
     document.addEventListener('beforeunload', () => this.updateHost())
